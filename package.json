@@ -2,7 +2,7 @@
   "name": "ps_lab2_controlacademico",
   "version": "1.0.0",
   "description": "API Web de control academico para un colegio",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
