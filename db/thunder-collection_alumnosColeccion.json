@@ -1,0 +1,42 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "alumnosColeccion",
+    "dateExported": "2024-02-13T23:29:47.188Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "5f7e2d74-d663-4b33-b3d5-28ab01a2ae80",
+            "colId": "94af95f5-5683-4afd-95a0-b05cfc1342fb",
+            "containerId": "",
+            "name": "alumnosPost",
+            "url": "http://localhost:3000/api/alumnos",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-13T22:55:09.312Z",
+            "modified": "2024-02-13T23:23:12.477Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"Diego Roberto\",\n  \"correo\": \"sdfsdaf@kinal.edu.gt\",\n  \"password\": \"123456\",\n  \"grado\": \"6to.\"\n}\n\n",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "276be99e-57f4-44bd-a194-14e991d0863a",
+            "colId": "94af95f5-5683-4afd-95a0-b05cfc1342fb",
+            "containerId": "",
+            "name": "alumnosGet",
+            "url": "http://localhost:3000/api/alumnos/",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-02-13T23:23:53.424Z",
+            "modified": "2024-02-13T23:24:07.975Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
