@@ -16,8 +16,7 @@ const AlumnoSchema = Schema({
     },
     role:{
         type: String,
-        default: "STUDENT_ROLE",
-        unique: true
+        default: "STUDENT_ROLE"
     },
     grado:{
         type: String,

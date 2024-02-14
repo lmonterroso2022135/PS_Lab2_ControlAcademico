@@ -65,7 +65,7 @@ const alumnoPut = async (req, res = response) =>{
     const alumno = await Alumno.findByIdAndUpdate(id, resto);
 
     res.status(200).json({
-        msg: 'Usuario Actualizado Exitosamente!!!',
+        msg: 'Alumno Actualizado',
         alumno
     });
 
