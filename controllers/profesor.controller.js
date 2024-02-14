@@ -1,9 +1,8 @@
 const bcryptjs = require('bcryptjs');
 const Profesor = require('../models/profesor');
 const { response } = require('express');
-const alumno = require('../models/alumno');
 
-const profesoresGet = async (req, res = responde) =>{
+const profesoresGet = async (req, res = response) =>{
     const {limite, desde} = req.query;
     const query = {estado: true};
 
