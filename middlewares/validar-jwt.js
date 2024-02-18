@@ -4,7 +4,7 @@ const Profesor = require('../models/profesor');
 const {request, response} = require ('express');
 
 const validarJWT = async (req = request, res = response, next) =>{
-    const token = req.header('x-token');
+    let token = req.header('x-token');
 
     if(!token){
         return res.status(401).json({
@@ -13,9 +13,9 @@ const validarJWT = async (req = request, res = response, next) =>{
     }
 
     try {
-        const {uid} = jwt.verefy(token, process.env.CUCHURRUMIN);
+        let {uid} = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
-        const usuario = await Alumno.findById(uid);
+        let usuario = await Alumno.findById(uid);
 
         if (!usuario){
             usuario = await Profesor.findById(uid);
@@ -32,7 +32,6 @@ const validarJWT = async (req = request, res = response, next) =>{
                 msg: "Token no válido, usuario con estado false"
             });
         }
-
         req.usuario = usuario;
         next();
 

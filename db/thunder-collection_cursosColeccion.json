@@ -1,0 +1,47 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "cursosColeccion",
+    "dateExported": "2024-02-18T14:19:12.070Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "29db337c-8372-44cf-8452-cbf687f55bca",
+            "colId": "1d59166b-b73e-4fb7-abf8-3f430a8e303b",
+            "containerId": "",
+            "name": "cursosPost",
+            "url": "http://localhost:3000/api/cursos",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-02-18T10:11:10.572Z",
+            "modified": "2024-02-18T10:23:19.921Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombreCurso\": \"Literatura\",\n  \"descripcio\": \"chi\",\n  \"bimestres\": 4,\n  \"profesor\": \"65cc863d3e378f4b74cd411c\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e0c9be25-0f06-4844-b0af-d247738a60f8",
+            "colId": "1d59166b-b73e-4fb7-abf8-3f430a8e303b",
+            "containerId": "",
+            "name": "cursosGet",
+            "url": "http://localhost:3000/api/cursos",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-02-18T10:11:25.377Z",
+            "modified": "2024-02-18T14:16:46.165Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": ""
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

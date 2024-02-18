@@ -1,6 +1,9 @@
 const {Router} = require ('express');
 const {check} = require ('express-validator');
 
+const { esAlumnoRole, esProfesorRole} = require('../middlewares/validar-roles');
+const { validarJWT } = require('../middlewares/validar-jwt');
+
 const {
     cursoPost,
     cursoGet,
@@ -11,13 +14,14 @@ const {
 
 const router = Router();
 
-router.get("/", cursoGet);
+router.get("/", validarJWT, esProfesorRole, cursoGet);
 
 router.get(
     "/:id",
     [
+        esProfesorRole,
         check('id', 'No es un id válido').isMongoId(),
-        check('id'),  
+        check('id'),
     ], cursoGetId
 )
 

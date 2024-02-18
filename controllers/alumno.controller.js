@@ -44,7 +44,7 @@ const alumnoPost  = async (req, res) => {
 const alumnoDelete = async (req, res) =>{
     const {id} = req.params;
     const alumno = await Alumno.findByIdAndUpdate(id, {estado: false});
-    const alumnoAutenticado = req.alumno;
+    const alumnoAutenticado = req.usuario;
 
     res.status(200).json({
         msg: 'Alumno a eliminar',

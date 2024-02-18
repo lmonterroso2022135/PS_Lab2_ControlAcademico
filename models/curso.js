@@ -14,9 +14,11 @@ const CursoSchema = Schema({
         require: [true, 'Especificar la cantidad de bimestres']
     },
     profesor:{
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Profesor',
         require: [true, 'El id del profesor es obligatorio']
     },
+    
     estado:{
         type: Boolean,
         default: true

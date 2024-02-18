@@ -8,6 +8,7 @@ const {
     alumnoDelete,
     alumnoPut
     } = require("../controllers/alumno.controller");
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
@@ -32,7 +33,8 @@ router.get(
 
 router.delete(
     "/:id",
-    [
+    [   
+        validarJWT,
         check('id', 'No es un id válido').isMongoId(),
         check('id').custom(existeAlumnoById) 
     ], alumnoDelete);
