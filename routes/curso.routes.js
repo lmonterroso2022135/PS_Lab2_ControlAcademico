@@ -5,47 +5,38 @@ const { esAlumnoRole, esProfesorRole} = require('../middlewares/validar-roles');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
 const {
-    cursoPost,
     cursoGet,
     cursoGetId,
     cursoDelete,
-    cursoPut
+    cursoPut,
+    cursosPorProfesor
     } = require("../controllers/curso.controller");
 
 const router = Router();
 
-router.get("/", validarJWT, esProfesorRole, cursoGet);
+router.get("/", validarJWT, esProfesorRole, cursosPorProfesor);
 
 router.get(
     "/:id",
     [
-        esProfesorRole,
         check('id', 'No es un id válido').isMongoId(),
-        check('id'),
     ], cursoGetId
 )
 
-router.post(
-    "/",
-    [
-        check("nombreCurso", "Especificar el nombre del curso").not().isEmpty(),
-        check("descripcion", "Agregue una descripcion").not().isEmpty(),
-        check("bimestres", "Especificar el numero de bimestres").not().isEmpty(),
-        check("profesor", "El apartado de maestro no puede estar vacío").not().isEmpty(),
-    ], cursoPost);
-
 router.delete(
-    "/",
+    "/:id",
     [
+        validarJWT,
+        esProfesorRole,
         check('id', 'No es un id válido').isMongoId(),
-        check('id'), 
     ], cursoDelete)
 
 router.put(
     "/:id",
-    [
+    [   
+        validarJWT,
+        esProfesorRole,
         check('id', 'No es un id válido').isMongoId(),
-        check('id'),
     ], cursoPut)
 
 module.exports = router;

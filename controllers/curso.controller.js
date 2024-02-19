@@ -1,9 +1,12 @@
 const Curso =  require('../models/curso');
+const Alumno = require('../models/alumno');
 const {response} = require('express');
+
 
 const cursoGet = async (req, res = response) => {
     const {limite, desde} = req.query;
     const query = {estado: true};
+    const usuario = req.usuario;
 
     const [total, cursos] = await Promise.all([
         Curso.countDocuments(query),
@@ -14,10 +17,10 @@ const cursoGet = async (req, res = response) => {
 
     res.status(200).json({
         total,
-        cursos
+        cursos,
+        usuario
     });
 }
-
 const cursoGetId = async (req, res) =>{
     const{id} = req.params;
     const curso = await Curso.findOne({_id: id});
@@ -27,44 +30,113 @@ const cursoGetId = async (req, res) =>{
     });
 }
 
-const cursoPost = async(req, res) => {
-    const {nombreCurso, descripcion, bimestres, profesor} = req.body;
-    const curso = new Curso({nombreCurso, descripcion, bimestres, profesor});
+// ALUMNOS ////////////////////////////////////////////////////////////////////////////////////
+const cursosPorAlumno = async(req, res) =>{
+    try {
+        const alumnoId = req.usuario._id;
+        const alumnoCursos = await Alumno.findById(alumnoId).populate('cursos');
+
+        const cursosActivos = alumnoCursos.cursos.filter(curso => curso.estado === true);
+        
+        res.status(200).json({ misCursos: cursosActivos});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Error al obtener los cursos del alumno' });
+    }
+}
+
+const asignacionAlumno = async(req, res) =>{
+    try {
+        const { cursoId } = req.body;
+        const alumnoId = req.usuario._id;
+
+        const alumno = await Alumno.findById(alumnoId);
+
+        alumno.cursos.push(cursoId);
+        await alumno.save();
+
+        console.log('oa'+alumnoId);
+        res.status(200).json({ 
+            msg: 'Curso agregado al alumno correctamente',
+            alumno
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Error al agregar el curso al alumno' });
+    }
+};
+// PROFESOR //////////////////////////////////////////////////////////////////////////
+const cursosPorProfesor = async (req, res) => {
+    try {
+        const {_id, nombre} = req.usuario;
+        const query = {profesor: _id, estado: true};
+
+        const cursos = await Promise.all([
+            Curso.find(query)  
+        ]);
+        res.status(200).json({ 
+            msg: `Cursos de ${nombre}`,
+            cursos 
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Error al obtener los cursos del usuario' });
+    }
+};
+
+const cursoDelete  = async (req, res) => {
+    const {_id, nombre} = req.usuario;
+    const {id} = req.params;
     
-    await curso.save();
-    res.status(202).json({
+
+    const curso = await Curso.findOneAndUpdate(
+        { _id: id, profesor: _id },
+        { estado: false },
+    );
+
+    if (!curso) {
+        return res.status(404).json({ msg: 'Usted no tiene autorizacion a eliminar este curso.' });
+    }    
+
+    res.status(200).json({
+        mdg: `Curso eliminado exitosamente por ${nombre}`,
         curso
     });
 }
 
-const cursoDelete  = async (req, res) => {
-    const {id} = req.params;
-    const curso = await Curso.findByIdAndUpdate(id, {estado: false});
-    const cursoAutenticado = req.curso;
-
-    res.status(200).json({
-        mdg: 'Curso a eliminar',
-        curso,
-        cursoAutenticado
-    });
-}
-
 const cursoPut = async (req, res = response) =>{
-    const {id} =req.params;
-    const {_id, ...resto} = req.body;
+    const {_id: _idUsuario, nombre} = req.usuario;
+    const {id} = req.params;
+    const {_id: _idCurso, ...resto} = req.body;
 
-    const curso = await Curso.findByIdAndUpdate(id, resto);
+    const curso = await Curso.findById(id);
+
+    const idUsuarioString = _idUsuario.toString();
+    const idProfesorString = curso.profesor._id.toString();
+
+    if (idUsuarioString !== idProfesorString) {
+        return res.status(403).json({ msg: 'Usted no tiene permisos para actualizar este curso' });
+    }
+
+    const cursoActualizado = await Curso.findByIdAndUpdate(
+        id, 
+        resto
+    );
 
     res.status(200).json({
-        mdg: 'Curso actualizado',
+        mdg: `Curso actualizado exitosamente por ${nombre}`,
         curso
     });
 }
 
 module.exports ={
-    cursoPost,
     cursoGet,
     cursoGetId,
     cursoDelete,
-    cursoPut
+    cursoPut,
+
+    cursosPorAlumno,
+    asignacionAlumno,
+
+    cursosPorProfesor
 }

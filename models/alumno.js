@@ -23,7 +23,8 @@ const AlumnoSchema = Schema({
         require: [true, 'El grado es un campo obligatorio']
     },
     cursos:{
-        type: [String],
+        type: [Schema.Types.ObjectId],
+        ref: 'Curso',
         default: []
     },
     estado:{
