@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "profesoresColeccion",
-    "dateExported": "2024-02-14T09:31:05.674Z",
+    "dateExported": "2024-02-19T02:45:33.062Z",
     "version": "1.1",
     "folders": [],
     "requests": [
@@ -9,17 +9,17 @@
             "_id": "dcd89372-e319-4520-953d-68acc9c14379",
             "colId": "3d110aa1-5d34-4fe8-b91a-5985f56f29d8",
             "containerId": "",
-            "name": "profesoresPost",
-            "url": "http://localhost:3000/api/profesores",
+            "name": "profesorRegistro",
+            "url": "http://localhost:3000/api/profesores/registrarse",
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-02-14T08:02:40.690Z",
-            "modified": "2024-02-14T09:30:58.503Z",
+            "modified": "2024-02-19T02:34:28.310Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"nombre\": \"Luisito\",\n  \"telefono\": 50159999,\n  \"correo\": \"eeeee@kinal.edu.gt\",\n  \"password\": \"654321\"\n}",
+                "raw": "{\n  \"nombre\": \"Profe7\",\n  \"telefono\": 50159999,\n  \"correo\": \"profe7@kinal.edu.gt\",\n  \"password\": \"123456\"\n}",
                 "form": []
             },
             "tests": []
@@ -28,7 +28,7 @@
             "_id": "b292de3b-f1e0-48d7-a336-2b664a10fb07",
             "colId": "3d110aa1-5d34-4fe8-b91a-5985f56f29d8",
             "containerId": "",
-            "name": "profesoresGet",
+            "name": "profesoresLista",
             "url": "http://localhost:3000/api/profesores",
             "method": "GET",
             "sortNum": 20000,
@@ -42,7 +42,7 @@
             "_id": "ffbe336e-c054-4970-b28f-7164b15b5d20",
             "colId": "3d110aa1-5d34-4fe8-b91a-5985f56f29d8",
             "containerId": "",
-            "name": "profesoresGetId",
+            "name": "profesorBuscar",
             "url": "http://localhost:3000/api/profesores/65cc83f893a9ba0600e85f81",
             "method": "GET",
             "sortNum": 30000,
@@ -56,17 +56,22 @@
             "_id": "24bd7308-9250-4061-a421-879532d3fef7",
             "colId": "3d110aa1-5d34-4fe8-b91a-5985f56f29d8",
             "containerId": "",
-            "name": "profesoresPut",
-            "url": "http://localhost:3000/api/profesores/65cc83f893a9ba0600e85f81",
+            "name": "profesorActualizarPerfil",
+            "url": "http://localhost:3000/api/profesores/perfil",
             "method": "PUT",
             "sortNum": 70000,
             "created": "2024-02-14T09:12:55.162Z",
-            "modified": "2024-02-14T09:21:49.432Z",
-            "headers": [],
+            "modified": "2024-02-19T02:36:59.118Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWQyYmUzNGI3YTFkN2EzNWZhY2RiNTQiLCJpYXQiOjE3MDgzMTAxOTYsImV4cCI6MTcwODMxMzc5Nn0.jVjJYaMs-m2joWxnWJ561G2Upi7qy7RSNbeYxlJgzqU"
+                }
+            ],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"nombre\": \"Luisillo\",\n  \"telefono\": 11\n  \n}",
+                "raw": "{\n  \"nombre\": \"Luisillo\",\n  \"telefono\": 11238967\n  \n}",
                 "form": []
             },
             "tests": []
@@ -75,13 +80,18 @@
             "_id": "115ea1ab-cc23-4980-ad00-8f8c73357a08",
             "colId": "3d110aa1-5d34-4fe8-b91a-5985f56f29d8",
             "containerId": "",
-            "name": "profesoresDelete",
-            "url": "http://localhost:3000/api/profesores/65cc83f893a9ba0600e85f81",
+            "name": "profesorDesactivarPerfil",
+            "url": "http://localhost:3000/api/profesores/perfil",
             "method": "DELETE",
             "sortNum": 80000,
             "created": "2024-02-14T09:23:50.471Z",
-            "modified": "2024-02-14T09:24:08.696Z",
-            "headers": [],
+            "modified": "2024-02-19T02:37:23.972Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWQyYmUzNGI3YTFkN2EzNWZhY2RiNTQiLCJpYXQiOjE3MDgzMTAxOTYsImV4cCI6MTcwODMxMzc5Nn0.jVjJYaMs-m2joWxnWJ561G2Upi7qy7RSNbeYxlJgzqU"
+                }
+            ],
             "params": [],
             "tests": []
         }
