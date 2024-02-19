@@ -31,7 +31,6 @@ class Server{
         this.app.use(this.cursoPath, require('../routes/curso.routes'));
 
         this.app.use(this.authPath, require('../routes/auth.routes'));
-        this.app.use(this.cursosAlumnoPath, require('../routes/cursosAlumno.routes'));
     }
     listen(){
         this.app.listen(this.port, () =>{

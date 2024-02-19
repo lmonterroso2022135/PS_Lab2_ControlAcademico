@@ -1,6 +1,8 @@
 const {Router} = require ('express');
 const {check} = require ('express-validator');
 const {existenteEmailAlumno, existeAlumnoById} = require ('../helpers/db-validators') 
+const { validarJWT } = require('../middlewares/validar-jwt');
+const { validarCampos} = require('../middlewares/validar-campos');
 const {
     alumnoPost,
     alumnosGet,
@@ -8,20 +10,20 @@ const {
     alumnoDelete,
     alumnoPut
     } = require("../controllers/alumno.controller");
-const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
 router.get("/", alumnosGet);
 
 router.post(
-    "/",
+    "/registrarse",
     [
         check("nombre", "El nombre no puede estar vacio").not().isEmpty(),
         check("correo", "Este no es un correo valido").isEmail(),
         check("correo").custom(existenteEmailAlumno),
         check("password", "El password debe ser mayor a 6 caracteres").isLength({min:6}),
-        check("grado", "El grado no puede estar vacio").not().isEmpty(),        
+        check("grado", "El grado no puede estar vacio").not().isEmpty(), 
+        validarCampos       
     ], alumnoPost);
 
 router.get(
@@ -32,7 +34,7 @@ router.get(
     ], alumnoGetId);
 
 router.delete(
-    "/:id",
+    "/perfil",
     [   
         validarJWT,
         check('id', 'No es un id válido').isMongoId(),
@@ -40,8 +42,9 @@ router.delete(
     ], alumnoDelete);
 
 router.put(
-    "/:id",
+    "/perfil",
     [
+        validarJWT,
         check('id', 'No es un id válido').isMongoId(),
         check('id').custom(existeAlumnoById)
     ], alumnoPut);

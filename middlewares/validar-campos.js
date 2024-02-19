@@ -15,6 +15,7 @@ const validarCursos = async(req, res, next) =>{
     const alumno = req.usuario;
     const {cursoId} = req.body;
     
+    
     if (alumno.cursos.includes(cursoId)) {
       return res.status(400).json({ msg: 'Ya estás asignado a este curso.'});
     }

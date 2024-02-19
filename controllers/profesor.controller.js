@@ -41,19 +41,17 @@ const profesorPost = async (req, res) => {
 }
 
 const profesorDelete = async (req, res) =>{
-    const {id} = req.params;
+    const {id} = req.usuario;
     const profesor = await Profesor.findByIdAndUpdate(id, {estado: false}); 
-    const profesorAutenticado = req.alumno;
 
     res.status(200).json({
-        msg: 'Profesor a eliminar',
-        profesor,
-        profesorAutenticado
+        msg: 'Tu perfil se ha desactivado',
+        profesor
     });
 }
 
 const profesorPut = async (req, res = response) => {
-    const {id} = req.params;
+    const {id} = req.usuario;
     const {_id, password, correo, ...resto} = req.body;
 
     if(password){
@@ -64,7 +62,7 @@ const profesorPut = async (req, res = response) => {
     const profesor = await Profesor.findByIdAndUpdate(id, resto);
 
     res.status(200).json({
-        msg: 'Profesor Actualizado',
+        msg: 'Tu perfil se ha Actualizado',
         profesor
     })
 }

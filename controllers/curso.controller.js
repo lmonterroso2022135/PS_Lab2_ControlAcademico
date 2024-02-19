@@ -3,10 +3,9 @@ const Alumno = require('../models/alumno');
 const {response} = require('express');
 
 
-const cursoGet = async (req, res = response) => {
+const cursosGet = async (req, res = response) => {
     const {limite, desde} = req.query;
     const query = {estado: true};
-    const usuario = req.usuario;
 
     const [total, cursos] = await Promise.all([
         Curso.countDocuments(query),
@@ -17,8 +16,7 @@ const cursoGet = async (req, res = response) => {
 
     res.status(200).json({
         total,
-        cursos,
-        usuario
+        cursos
     });
 }
 const cursoGetId = async (req, res) =>{
@@ -29,6 +27,7 @@ const cursoGetId = async (req, res) =>{
         curso
     });
 }
+
 
 // ALUMNOS ////////////////////////////////////////////////////////////////////////////////////
 const cursosPorAlumno = async(req, res) =>{
@@ -128,9 +127,21 @@ const cursoPut = async (req, res = response) =>{
         curso
     });
 }
+const cursoPost = async(req, res) => {
+    const {_id} = req.usuario;
+
+    const {nombreCurso, descripcion, bimestres} = req.body;
+    const curso = new Curso({nombreCurso, descripcion, bimestres, profesor: _id});
+    
+    await curso.save();
+    res.status(202).json({
+        curso
+    });
+}
 
 module.exports ={
-    cursoGet,
+    cursoPost,
+    cursosGet,
     cursoGetId,
     cursoDelete,
     cursoPut,

@@ -42,19 +42,19 @@ const alumnoPost  = async (req, res) => {
 }
 
 const alumnoDelete = async (req, res) =>{
-    const {id} = req.params;
+    const {id} = req.usuario;
     const alumno = await Alumno.findByIdAndUpdate(id, {estado: false});
     const alumnoAutenticado = req.usuario;
 
     res.status(200).json({
-        msg: 'Alumno a eliminar',
+        msg: 'Tu perfil se ha desactivado.',
         alumno,
         alumnoAutenticado
     });
 }
 
 const alumnoPut = async (req, res = response) =>{
-    const {id} = req.params;
+    const {id} = req.usuario;
     const {_id, password, correo, ...resto} = req.body;
     
     if(password){
@@ -65,7 +65,7 @@ const alumnoPut = async (req, res = response) =>{
     const alumno = await Alumno.findByIdAndUpdate(id, resto);
 
     res.status(200).json({
-        msg: 'Alumno Actualizado',
+        msg: 'Tu perfil se ha actualizado',
         alumno
     });
 
