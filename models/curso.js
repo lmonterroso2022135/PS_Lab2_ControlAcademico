@@ -3,7 +3,8 @@ const {Schema, model} =  require('mongoose');
 const CursoSchema = Schema({
     nombreCurso:{
         type: String,
-        require: [true, 'El nombre del curso es un campo obligatorio']
+        require: [true, 'El nombre del curso es un campo obligatorio'],
+        unique: true
     },
     descripcion:{
         type: String,
@@ -18,7 +19,6 @@ const CursoSchema = Schema({
         ref: 'Profesor',
         require: [true, 'El id del profesor es obligatorio']
     },
-    
     estado:{
         type: Boolean,
         default: true

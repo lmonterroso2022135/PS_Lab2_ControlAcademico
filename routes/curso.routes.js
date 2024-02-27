@@ -4,6 +4,7 @@ const {check} = require ('express-validator');
 const { esAlumnoRole, esProfesorRole} = require('../middlewares/validar-roles');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { validarCampos, validarCursos} = require('../middlewares/validar-campos');
+const { existenteCurso } = require('../helpers/db-validators')
 
 const {
     cursoPost,
@@ -29,8 +30,10 @@ router.post(
         validarJWT,
         esProfesorRole,
         check("nombreCurso", "Especificar el nombre del curso").not().isEmpty(),
+        check("nombreCurso").custom(existenteCurso),
         check("descripcion", "Agregue una descripcion").not().isEmpty(),
         check("bimestres", "Especificar el numero de bimestres").not().isEmpty(),
+        validarCampos
     ], cursoPost);
 
     // ELIMINA EL CURSO, LE CAMBIA EL ESTADO A FALSE
@@ -58,7 +61,7 @@ router.post(
         validarJWT,
         esAlumnoRole,
         validarCursos,
-        check("cursoId").notEmpty(),
+        check("nombreCurso", "Especificar el nombre del curso").not().isEmpty(),
         validarCampos 
     ], asignacionAlumno);
 

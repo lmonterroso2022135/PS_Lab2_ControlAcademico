@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+const Curso =  require('../models/curso');
 
 
 const validarCampos = (req, res, next) => {
@@ -13,10 +14,11 @@ const validarCampos = (req, res, next) => {
 const validarCursos = async(req, res, next) =>{
   try {
     const alumno = req.usuario;
-    const {cursoId} = req.body;
+    const {nombreCurso} = req.body;
     
-    
-    if (alumno.cursos.includes(cursoId)) {
+    const curso = await Curso.findOne({ nombreCurso });
+
+    if (alumno.cursos.includes(curso._id)) {
       return res.status(400).json({ msg: 'Ya estás asignado a este curso.'});
     }
     if (alumno.cursos.length >= 3) {

@@ -46,15 +46,22 @@ const cursosPorAlumno = async(req, res) =>{
 
 const asignacionAlumno = async(req, res) =>{
     try {
-        const { cursoId } = req.body;
+        const {nombreCurso} = req.body;
         const alumnoId = req.usuario._id;
 
         const alumno = await Alumno.findById(alumnoId);
+        const curso = await Curso.findOne({ nombreCurso });
 
-        alumno.cursos.push(cursoId);
+        console.log(curso._id);
+
+        if (!curso) {
+            return res.status(404).json({ msg: 'Curso no encontrado' });
+        }
+        alumno.cursos.push(curso._id);
+
+
         await alumno.save();
 
-        console.log('oa'+alumnoId);
         res.status(200).json({ 
             msg: 'Curso agregado al alumno correctamente',
             alumno
@@ -116,11 +123,6 @@ const cursoPut = async (req, res = response) =>{
     if (idUsuarioString !== idProfesorString) {
         return res.status(403).json({ msg: 'Usted no tiene permisos para actualizar este curso' });
     }
-
-    const cursoActualizado = await Curso.findByIdAndUpdate(
-        id, 
-        resto
-    );
 
     res.status(200).json({
         mdg: `Curso actualizado exitosamente por ${nombre}`,

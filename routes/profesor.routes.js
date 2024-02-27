@@ -26,27 +26,24 @@ router.post(
         validarCampos
     ], profesorPost);
 
-module.exports = router;
-
 router.get(
     "/:id",
     [
         check('id', 'No es un id válido').isMongoId(),
-        check('id').custom(existeProfeById)
+        check('id').custom(existeProfeById),
+        validarCampos
     ], profesorGetId);
 
 router.delete(
     "/perfil",
     [
-        validarJWT,
-        check('id', 'No es un id válido').isMongoId(),
-        check('id').custom(existeProfeById)
+        validarJWT
     ], profesorDelete);
 
 router.put(
     "/perfil",
     [
         validarJWT,
-        check('id', 'No es un id válido').isMongoId(),
-        check('id').custom(existeProfeById)
     ], profesorPut)
+
+module.exports = router;

@@ -30,23 +30,20 @@ router.get(
     "/:id",
     [
         check('id', 'No es un id válido').isMongoId(),
-        check('id').custom(existeAlumnoById) 
+        check('id').custom(existeAlumnoById),
+        validarCampos
     ], alumnoGetId);
 
 router.delete(
     "/perfil",
     [   
-        validarJWT,
-        check('id', 'No es un id válido').isMongoId(),
-        check('id').custom(existeAlumnoById) 
+        validarJWT
     ], alumnoDelete);
 
 router.put(
     "/perfil",
     [
-        validarJWT,
-        check('id', 'No es un id válido').isMongoId(),
-        check('id').custom(existeAlumnoById)
+        validarJWT
     ], alumnoPut);
 
 module.exports = router;
